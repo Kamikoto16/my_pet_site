@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <div style="float:right;">
+        <a class="py-2 d-none d-md-inline-block" href="#">Главная</a>
+
+        {% if user.is_authenticated %}
+            <a class="py-2 d-none d-md-inline-block" href="#">Личный кабинет</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Мои объявления</a>
+            <a class="py-2 d-none d-md-inline-block" href="{% url 'logout' %}">Logout</a>
+
+        
+        {% else %}
+            <a class="py-2 d-none d-md-inline-block" href="{% url 'login' %}">Login</a>
+            <a class="py-2 d-none d-md-inline-block" href="{% url 'register' %}">Register</a>
+
+         {% endif %}
+        </div>
+    </nav>
+
+    <h1>Home page</h1>
+    <hr>
+   
+{% endblock %}

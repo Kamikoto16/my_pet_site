@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Login</h1>
-    <hr>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <h1 class="text-center">Авторизация</h1>
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+    <form class="d-flex flex-column align-items-center justify-content-center " method="post">
+        {% csrf_token %}
 
-    <form action="{% url 'login' %}" method="post">
-    {{ form }}
-    {% csrf_token %}
-    <button type="submit" class="btn btn-success">submit</button>
+        <div class="form-error">{{ form.non_field_errors }}</div>
+
+        {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Войти</button>
     </form>
 
-    <a href="{% url 'password_reset' %}">Forgot password?</a>
 {% endblock %}
+

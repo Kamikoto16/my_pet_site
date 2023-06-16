@@ -1,30 +1,109 @@
-from django.contrib.auth import authenticate, login
-from django.views import View
+from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
+from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from .forms import *
+from .models import *
+from .utils import *
+from time import gmtime, strftime
+from .models import pet, Category ,comments
 
-from users.forms import UserCreationForm
+
+def get_post(request, id):
+    if request.method == 'POST':
+        try:
+            id_user = request.user.id
+            id_pet = id
+            content = request.POST.get('content')
+            comments.objects.create(
+                id_user=id_user,
+                id_pet=id_pet,
+                content=content,
+                user=request.user,
+            )
+        except Exception as e:
+            return redirect('login')
+
+    petp = pet.objects.get(id=id)
+    comments_list = comments.objects.filter(id_pet=id).select_related('user')
+    return render(request, 'post.html', {'pets': petp, 'comments_list': comments_list})
+@login_required(login_url='/users/login')
+def delete_post(request, id):
+    # Получаем URL страницы, с которой пришел запрос
+    previous_page = request.META.get('HTTP_REFERER')
+
+    try:
+        petp = pet.objects.get(id=id, id_user=request.user.id)
+        petp.delete()
+        if previous_page:
+            return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
+    except pet.DoesNotExist:
+        pass
+    
+    # Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
+    return redirect('profile')
+
+@login_required(login_url='/users/login')
+def profile(request):
+    user = request.user
+    print(user)
+    pett = pet.objects.filter(id_user=request.user.id)
+    return render(request, 'profile.html', {'user': user, 'pet': pett})
+@login_required(login_url='/users/login')
+def add_pet(request):
+    user_id = request.user.id
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        slug = strftime("%Y-%m-%d-%H-%M-%S", gmtime())
+        content = request.POST.get('content')
+        photo = request.FILES['photo']
+        cat_id = request.POST.get('cat')
+        cat = Category.objects.get(id=cat_id)
+        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, cat=cat)
+        pett.save()
+        return redirect('home')
+    else:
+        categories = Category.objects.all()
+        context = {'categories': categories}
+        return render(request, 'add_pet.html', context)
+def pet_list(request):
+    pets = pet.objects.all()
+    return render(request, 'posts.html', {'persons': pets})
+class RegisterUser(DataMixin,  CreateView):
+    form_class = RegisterUserForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Регистрация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
-class Register(View):
-    template_name = 'registration/register.html'
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
-    def get(self, request):
-        context = {
-            'form': UserCreationForm()
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-        form = UserCreationForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-        context = {
-            'form': form
-        }
-        return render(request, self.template_name, context)

@@ -1,0 +1,38 @@
+/* CSS стили для файла login */
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.form-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #555;
+}

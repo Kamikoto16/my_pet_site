@@ -1,28 +1,62 @@
 {% extends 'base.html' %}
 
+{% block name %}главная{% endblock %}
 {% block content %}
 
+{% load static %}
+<link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/cursor-paw.css' %}">
+<link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
 
-    <nav class="site-header sticky-top py-1">
-        <div class="container d-flex flex-column flex-md-row justify-content-between">
-            <div style="float:right;">
-        <a class="py-2 d-none d-md-inline-block" href="#">Главная</a>
+<html class="cursor-paw">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
 
-        {% if user.is_authenticated %}
-            <a class="py-2 d-none d-md-inline-block" href="#">Личный кабинет</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Мои объявления</a>
-            <a class="py-2 d-none d-md-inline-block" href="{% url 'logout' %}">Logout</a>
+<div class="p-5 mb-4   text-center bg-overlay">
+  <div class="container py-5">
+    <h1 id="bobik" class="display-3 fw-bold" style="font-size: 5rem;">BobikFinder</h1>
+    <p id="my-text" class="fs-3">Сайт по поиску пропавших животных</p>
+  </div>
+</div>
 
-        
-        {% else %}
-            <a class="py-2 d-none d-md-inline-block" href="{% url 'login' %}">Login</a>
-            <a class="py-2 d-none d-md-inline-block" href="{% url 'register' %}">Register</a>
+<script>
+  const bobikElement = document.getElementById('bobik');
+  bobikElement.addEventListener('mouseenter', function() {
+    bobikElement.style.fontSize = '5.1rem';
+    bobikElement.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
+  });
 
-         {% endif %}
-        </div>
-    </nav>
+  bobikElement.addEventListener('mouseleave', function() {
+    bobikElement.style.fontSize = '5rem';
+    bobikElement.style.textShadow = 'none';
+  });
 
-    <h1>Home page</h1>
-    <hr>
-   
+  bobikElement.addEventListener('click', function() {
+    alert('Нашли питомца? Создайте объявление! Потеряли? Поищите его в списке объявлений!');
+  });
+</script>
+
+<div class="row align-items-md-stretch">
+  <div class="col-md-6">
+    <div class="h-100 p-5 text-bg-dark rounded-3 block1">
+      <h2>Список объявлений</h2>
+      <p>Если вы беспокоитесь о судьбе своего питомца, то стоит начать свои поиски в ранее опубликованных постах.</p>
+      <a href="/users/posts">
+        <button class="btn btn-outline-light" type="button">Смотреть объявления</button>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="h-100 p-5 bg-body-tertiary border rounded-3 block2">
+      <h2>Создать объявление</h2>
+      <p>Что ж, если не нашли своего дружка, то давайте создадим для него объявление.</p>
+      <a href="/users/add_pet">
+        <button class="btn btn-outline-secondary" type="button">Создать объявление</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
 {% endblock %}

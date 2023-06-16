@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+<div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
+  <h1>Профиль пользователя {{user.username}}</h1>
+  <table>
+
+	<thead>
+	  <tr>
+		<th></th>
+		<th></th>
+	  </tr>
+	</thead>
+	<tbody>
+		<tr><td></td><td>{{user.first_name}}</td></tr>
+		<tr><td></td><td>{{user.last_name}}</td></tr>
+		<tr><td>Почта</td><td>: {{user.email}}</td></tr>
+		<tr><td>Дата регистрации</td><td>: {{user.date_joined}}</td></tr>
+		<tr><td>Последняя активность</td><td>: {{user.last_login}}</td></tr>
+	</tbody>
+  </table>
+
+  <h2>Посты пользователя</h2>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in pet %}
+      <tr>
+        <td>{{p.title}}</td>
+        <td>{{p.cat}}</td>
+
+        <td><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></td>
+
+        <td><a href="/users/deletepost/{{p.id}}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a></td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+          </div>
+    </div>
+{% endblock %}

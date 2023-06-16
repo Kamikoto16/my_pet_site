@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+   {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+
+    <div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
+<h1 class="text-center"> {{pets.title}} </h1>
+
+<div class="d-flex justify-content-center">
+<img src="../../../media/{{ pets.photo }}" class="bd-placeholder-img card-img-top mx-auto" style="width: 100%; max-width: 200px;">
+ </div>
+<p><h5 class="text-center">Описание: {{ pets.content }} </h5></p>
+<p><h5 class="text-center">Дата: {{ pets.time_create }} </h5></p>
+<p><h5 class="text-center">Статус: {{ pets.cat }} </h5></p>
+
+
+
+        </div>
+    </div>
+
+
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+      <div class="card-body p-4">
+        <div class="form-outline mb-4">
+             <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+				<h1>Комментарии: </h1>
+                <label for="content">Оставьте Ваш комментарий, если есть какая-либо информация по питомцу!</label>
+                <input type="text" name="content" id="content" required><br><br>
+                
+
+
+                <input type="submit" value="добавить коммент">
+              </form>
+         
+        </div>
+            {% for c in comments_list %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>{{ c.content }}</p>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <p class="small mb-0 ms-2">{{ c.user.username }}</p>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <p class="small text-muted mb-0">{{ c.time_create }}</p>
+                                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+                                <p class="small text-muted mb-0">от {{ c.user.username }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+/* Стили для фразы "О нас" */
+h1.display-5 {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Графический эффект при наведении курсора */
+h1.display-5:hover {
+  transform: scale(1.02);
+}
+/* Графический эффект для текста при наведении */
+#expanding-text {
+  line-height: 1;
+  transition: line-height 0.3s ease;
+}
+
+#expanding-text:hover {
+  line-height: 1.2;
+}
+/* Графический эффект для текста при наведении на блоки списка объявлений и создать объявление */
+.block1 {
+  transition: transform 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.block1:hover {
+  transform: translateX(-10px);
+}
+
+.block2 {
+  transition: transform 0.3s ease;
+}
+
+.block2:hover {
+  transform: translateX(+10px);
+}
+/**/
+
+.my-text {
+  font-family: 'Open Sans', sans-serif;
+}
+.bg-overlay {
+ background-color: rgba(255, 255, 255, 0.7);
+ 
+}

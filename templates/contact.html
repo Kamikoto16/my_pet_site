@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block name %}Контакты {% endblock %}
+{% block content %}
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<div class="p-5 mb-4  rounded-3 bg-overlay">
+      <div class="container-fluid py-5"; style="opacity: 1;">
+        <h1 class="display-5 fw-bold">Контакты </h1>
+        <p id="expanding-text" class="col-md-8 fs-4">Ветеринарная клиника Лимпопо (+7 913 040-46-25) Адрес: Светлогорская ул., 17Д район Северный, район Советский, этаж 2
+ЦентроВет (+7 391 227-85-07)
+Адрес: ул. Копылова, 44
+Ветеринарный центр (+7 391 271-85-82)
+Адрес: ул. Республики, 42А
+</p>
+
+
+      </div>
+    </div>
+
+
+{% endblock %}

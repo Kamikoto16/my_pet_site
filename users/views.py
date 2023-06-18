@@ -12,7 +12,7 @@ from .forms import *
 from .models import *
 from .utils import *
 from time import gmtime, strftime
-from .models import pet, Category ,comments
+from .models import pet, Category ,comments ,type_of_animal
 
 
 def get_post(request, id):
@@ -65,13 +65,18 @@ def add_pet(request):
         content = request.POST.get('content')
         photo = request.FILES['photo']
         cat_id = request.POST.get('cat')
+
+        toa_id = request.POST.get('toa')
         cat = Category.objects.get(id=cat_id)
-        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, cat=cat)
+        toa = type_of_animal.objects.get(id=cat_id)
+
+        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, cat=cat , type_of_animal=toa )
         pett.save()
         return redirect('home')
     else:
         categories = Category.objects.all()
-        context = {'categories': categories}
+        type_of_animals = type_of_animal.objects.all()
+        context = {'categories': categories , 'type_of_animals':type_of_animals}
         return render(request, 'add_pet.html', context)
 def pet_list(request):
     pets = pet.objects.all()
@@ -107,3 +112,11 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+def home(request):
+    pets = pet.objects.all().reverse()[:3]
+    return render(request, 'home.html', {'persons': pets})    
+
+
+def searh(request):
+    pets = pet.objects.all()
+    return render(request, 'posts.html', {'persons': pets})

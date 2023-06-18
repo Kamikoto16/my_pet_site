@@ -4,10 +4,11 @@ from django.views.generic import TemplateView
 
 from django.conf.urls.static import static
 from project import settings
-
+from users.views import home 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', home, name='home'),
+    
     path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
 

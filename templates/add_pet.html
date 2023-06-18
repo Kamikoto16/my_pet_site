@@ -25,6 +25,14 @@
         <option value="{{ category.id }}">{{ category.name }}</option>
       {% endfor %}
     </select><br><br>
+
+    <label for="toa">Вид животного:</label>
+    <select style="width: 100px;" name="toa" id="toa" required>
+      {% for category in type_of_animals %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
     <input type="submit" value="Add Pet">
   </form>
           </div>

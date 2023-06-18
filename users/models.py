@@ -18,6 +18,20 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['id']
+class type_of_animal(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name="вид")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('type_of_animal', kwargs={'cat_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'вид'
+        verbose_name_plural = 'вид'
+        ordering = ['id']
 
 class pet(models.Model):
     id_user = models.IntegerField()
@@ -29,6 +43,8 @@ class pet(models.Model):
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категории")
+    type_of_animal = models.ForeignKey('type_of_animal', on_delete=models.PROTECT, verbose_name="вид")
+
 
 
     def __str__(self):

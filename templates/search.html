@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method='POST'>
+  {% csrf_token %}
+  <label for='list1'>Выберите тип объявлений:</label>
+  <select id='list1' name='list1'>
+      {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+  </select>
+  <br><br>
+  <label for='list2'>Выберите вид животного:</label>
+  <select id='list2' name='list2'>
+      {% for category in type_of_animals %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+  </select>
+  <br><br>
+  <button type='submit'>Отсортировать</button>
+</form>
+
     <h1>Объявления</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
     

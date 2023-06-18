@@ -118,5 +118,12 @@ def home(request):
 
 
 def searh(request):
+    if request.method == 'POST':
+        print('хуй')
+    categories = Category.objects.all()
+    type_of_animals = type_of_animal.objects.all()
     pets = pet.objects.all()
-    return render(request, 'posts.html', {'persons': pets})
+
+    context = {'persons': pets,'categories': categories , 'type_of_animals':type_of_animals}
+   
+    return render(request, 'search.html', context)

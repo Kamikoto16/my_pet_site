@@ -2,9 +2,15 @@
 
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <h1 class="text-center">Авторизация</h1>
 
+
+<link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+
+    <div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
+		    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+<h1 class="text-center" style="font-size: 40px;">Авторизация</h1>
     <form class="d-flex flex-column align-items-center justify-content-center " method="post">
         {% csrf_token %}
 
@@ -16,7 +22,10 @@
         {% endfor %}
 
         <button type="submit" class="btn btn-primary">Войти</button>
-    </form>
+                <p style="margin-top: 20px;">Еще нет аккаунта? <a href="/users/register/">Регистрация</a> займет всего пару минут!</p>
 
+    </form>
+        </div>
+    </div>
 {% endblock %}
 

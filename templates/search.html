@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!--подгружаем статику-->
+ {% load static %}
+  <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+  <!--подгружаем статику-->
+  <div class="bg-overlay">
+    <div class="container-fluid py-5" >
 <form method='POST'>
   {% csrf_token %}
   <label for='list1'>Выберите тип объявлений:</label>
@@ -19,8 +25,10 @@
   <br><br>
   <button type='submit'>Отсортировать</button>
 </form>
-
-    <h1>Объявления</h1>
+   </div>
+  </div>
+<!-- поменял внешку -->
+  <h1 style="background-color:#212529;border-radius: 5px; margin-top:20px ;color :#fff;padding: 20; width: auto;" >Результаты поиска</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
     
     {% for person in persons %}

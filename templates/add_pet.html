@@ -9,7 +9,8 @@
     <div class="p-5 mb-4  rounded-3 bg-overlay">
         <div class="container-fluid py-5" style="opacity: 1;">
 		  <h2>Новое объявление</h2>
-  <form method="post" enctype="multipart/form-data">
+		  <!-- Добавил вызов функции ошибки onsubmit="return validateForm() -->
+   <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     {% csrf_token %}
     <label for="title">Кличка:</label>
     <input type="text" name="title" id="title" required><br><br>
@@ -19,6 +20,9 @@
 
     <label for="photo">Добавить фотографию:</label>
     <input type="file" name="photo" id="photo" required><br><br>
+	<!-- ошибка с типом файла-->
+	<small id="fileFormatError" style="color: red; display: none;">Доступны только форматы изображений.</small><br><br>
+	<!-- ошибка с типом файла-->
     <label for="cat">Категория:</label>
     <select style="width: 100px;" name="cat" id="cat" required>
       {% for category in categories %}
@@ -37,4 +41,29 @@
   </form>
           </div>
     </div>
+		<!-- скрипт на формат фотографии-->
+	<script>
+
+ function validateForm() {
+  var fileInput = document.getElementById('photo');
+  var file = fileInput.files[0];
+  var fileFormatError = document.getElementById('fileFormatError');
+
+  if (file) {
+    var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp', 'tiff'];
+
+    var fileName = file.name;
+    var fileExtension = fileName.split('.').pop().toLowerCase();
+
+    if (!allowedExtensions.includes(fileExtension)) {
+      fileFormatError.style.display = 'block';
+      return false;
+    }
+  }
+
+  return true;
+}
+<!-- скрипт на формат фотографии-->
+    </script>
+  </body>
 {% endblock %}

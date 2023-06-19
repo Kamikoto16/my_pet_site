@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!--new-->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+
+    <div class="p-5 mb-4  rounded-3 bg-overlay text-center">
+        <div class="container-fluid py-5" style="opacity: 2;">
+		<!--new-->
 <h1>{{title}}</h1>
 
 <form method="post">
@@ -13,5 +21,6 @@
 
     <button type="submit">Зарегестрироваться</button>
 </form>
-
+        </div>
+    </div>
 {% endblock %}

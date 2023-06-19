@@ -1,23 +1,17 @@
 {% extends 'base.html' %}
 
+{% block name %}Контакты{% endblock %}
 
-{% block name %}Контакты {% endblock %}
 {% block content %}
   {% load static %}
-    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
-<div class="p-5 mb-4  rounded-3 bg-overlay">
-      <div class="container-fluid py-5"; style="opacity: 1;">
-        <h1 class="display-5 fw-bold">Контакты </h1>
-        <p id="expanding-text" class="col-md-8 fs-4">Ветеринарная клиника Лимпопо (+7 913 040-46-25) Адрес: Светлогорская ул., 17Д район Северный, район Советский, этаж 2
-ЦентроВет (+7 391 227-85-07)
-Адрес: ул. Копылова, 44
-Ветеринарный центр (+7 391 271-85-82)
-Адрес: ул. Республики, 42А
-</p>
-
-
-      </div>
+  <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+  <div class="bg-overlay">
+    <div class="container-fluid py-5" >
+      <h1 class="display-5 fw-bold text-center">Контакты и адреса ветеринарных клиник в городе Красноярск</h1>
+        <div id="map" style="width: 100%; height: 20px;"></div>
+		
+      <script src="https://api-maps.yandex.ru/2.1/?apikey=ae232ec8-e420-4b57-bedf-dde5537783fc&lang=ru_RU" type="text/javascript"></script>
+      <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ae11ba3e9062c50ed3f185e40c6737cd1075c4a7eb4a04adc0eb9f692f775ad78&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
     </div>
-
-
+  </div>
 {% endblock %}

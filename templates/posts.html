@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Объявления</h1>
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+    <div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
+            <h1 style="font-size: 60px; text-align: center;">Список объявлений на сайте</h1>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
     
     {% for person in persons %}
@@ -37,6 +42,12 @@
 </div>
 {% endblock %}
 {% block name %}о нас {% endblock %}
+
+
+
+
+
+
 
 
 

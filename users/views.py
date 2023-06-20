@@ -12,8 +12,10 @@ from .forms import *
 from .models import *
 from .utils import *
 from time import gmtime, strftime
-from .models import Category ,comments ,type_of_animal
+from .models import Category ,comments ,type_of_animal ,status
 from .models import posts as pet
+import hashlib
+
 
 def get_post(request, id):
     if request.method == 'POST':
@@ -53,9 +55,12 @@ def delete_post(request, id):
 @login_required(login_url='/users/login')
 def profile(request):
     user = request.user
-    print(user)
-    pett = pet.objects.filter(id_user=request.user.id)
-    return render(request, 'profile.html', {'user': user, 'pet': pett})
+    
+    pett = pet.objects.filter(id_user=request.user.id , status__name='публично')
+    rew = pet.objects.filter(id_user=request.user.id , status__name='проверка')
+    archive = pet.objects.filter(id_user=request.user.id , status__name='архив')
+    return render(request, 'profile.html', {'user': user, 'pet': pett ,'rew':rew ,'archive':archive})
+
 @login_required(login_url='/users/login')
 def add_pet(request):
     user_id = request.user.id
@@ -71,7 +76,10 @@ def add_pet(request):
         cat = Category.objects.get(id=cat_id)
         toa = type_of_animal.objects.get(id=cat_id)
 
-        pett = pet(id_user=user_id,title=title, slug=slug, additional_information=content, photo=photo, category=cat , type_of_animal=toa )
+        start_staus = status.objects.get(name="проверка")
+    
+
+        pett = pet(id_user=user_id,title=title, slug=slug,status=start_staus, additional_information=content, photo=photo, category=cat , type_of_animal=toa )
         pett.save()
         return redirect('home')
     else:
@@ -80,12 +88,14 @@ def add_pet(request):
         context = {'categories': categories , 'type_of_animals':type_of_animals}
         return render(request, 'add_pet.html', context)
 def pet_list(request):
-    pets = pet.objects.all()
+    pets = pet.objects.filter(status__name='публично').order_by('-id')
     return render(request, 'posts.html', {'persons': pets})
 class RegisterUser(DataMixin,  CreateView):
     form_class = RegisterUserForm
     template_name = 'register.html'
     success_url = reverse_lazy('login')
+
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,7 +124,7 @@ def logout_user(request):
     return redirect('login')
 
 def home(request):
-    pets = pet.objects.all().reverse()[:3]
+    pets = pet.objects.filter(status__name='публично').order_by('-id')[:3]
     return render(request, 'home.html', {'persons': pets})    
 
 
@@ -126,14 +136,14 @@ def search(request):
         l2 = request.POST.get('list2')   
         
         print(l1,l2)     
-        pets = pet.objects.filter(category=l1,type_of_animal=l2)
+        pets = pet.objects.filter(category=l1,type_of_animal=l2 ,status__name='публично')
 
         context = {'persons': pets,'categories': categories , 'type_of_animals':type_of_animals}
        
         return render(request, 'search.html', context)
     categories = Category.objects.all()
     type_of_animals = type_of_animal.objects.all()
-    pets = pet.objects.all()
+    pets = pet.objects.filter(status__name='публично').order_by('-id')
 
     context = {'persons': pets,'categories': categories , 'type_of_animals':type_of_animals}
    

@@ -49,6 +49,56 @@
       {% endfor %}
     </tbody>
   </table>
+
+
+    <h2>Посты пользователя на проверке</h2>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in rew %}
+      <tr>
+        <td>{{p.title}}</td>
+        <td>{{p.cat}}</td>
+
+        
+        <td><a href="/users/get_post/{{p.id}}"><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></a></td>
+        <td><a href="/users/deletepost/{{p.id}}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a></td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    <h2>Посты пользователя в архиве</h2>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in archive %}
+      <tr>
+        <td>{{p.title}}</td>
+        <td>{{p.cat}}</td>
+
+        
+        <td><a href="/users/get_post/{{p.id}}"><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></a></td>
+        <td><a href="/users/deletepost/{{p.id}}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a></td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
           </div>
     </div>
 {% endblock %}

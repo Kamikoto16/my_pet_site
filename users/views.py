@@ -12,8 +12,8 @@ from .forms import *
 from .models import *
 from .utils import *
 from time import gmtime, strftime
-from .models import pet, Category ,comments ,type_of_animal
-
+from .models import Category ,comments ,type_of_animal
+from .models import posts as pet
 
 def get_post(request, id):
     if request.method == 'POST':
@@ -70,7 +70,7 @@ def add_pet(request):
         cat = Category.objects.get(id=cat_id)
         toa = type_of_animal.objects.get(id=cat_id)
 
-        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, cat=cat , type_of_animal=toa )
+        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, category=cat , type_of_animal=toa )
         pett.save()
         return redirect('home')
     else:
@@ -125,7 +125,7 @@ def search(request):
         l2 = request.POST.get('list2')   
         
         print(l1,l2)     
-        pets = pet.objects.filter(cat=l1,type_of_animal=l2)
+        pets = pet.objects.filter(category=l1,type_of_animal=l2)
 
         context = {'persons': pets,'categories': categories , 'type_of_animals':type_of_animals}
        

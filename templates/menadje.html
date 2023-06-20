@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+
+    <div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
   <h1>Посты на одобрение</h1>
   <table>
     <thead>
@@ -102,6 +108,8 @@
     {% endfor %}
     </tbody>
   </table>
+          </div>
+    </div>
 {% endblock %}
 {% block name %}страница менед {% endblock %}
 

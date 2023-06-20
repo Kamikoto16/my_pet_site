@@ -36,7 +36,7 @@
         <div class="text-end">
           {% if request.user.is_authenticated %}
           <a href="/users/profile/"><button type="button" class="btn btn-outline-light me-2">Мой профиль</button></a>
-    <a href="/users/logout/" id="logoutButton" class="btn btn-outline-light me-2">{{user.username}} | Выйти</a>
+    <a href="#" id="logoutButton" class="btn btn-outline-light me-2">{{user.username}} | Выйти</a>
           {% else %}
           <a href="/users/login/"><button type="button" class="btn btn-outline-light me-2">Войти в существующий аккаунт</button></a>
            <a href="/users/register/"><button type="button" class="btn btn-outline-light me-2">Зарегистрироваться</button></a>

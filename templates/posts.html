@@ -22,8 +22,8 @@
             <img src="../media/{{ person.photo }}" class="bd-placeholder-img card-img-top" width="100%" height="225">
             <div class="card-body">
               <p class="card-text"><h1>{{ person.title }}</h1>
-                          <h3>{{ person.cat }}</h3>
-                        {{ person.content }}<h5 >пользователь : id{{ person.id_user }}</h5></p>
+                          <h3>{{ person.category }}</h3>
+                        {{ person.additional_information }}<h5 >пользователь : id{{ person.id_user }}</h5></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a href="/users/get_post/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">смотреть</button></a>

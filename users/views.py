@@ -28,6 +28,7 @@ def get_post(request, id):
                 user=request.user,
             )
         except Exception as e:
+            print(e)
             return redirect('login')
 
     petp = pet.objects.get(id=id)
@@ -70,7 +71,7 @@ def add_pet(request):
         cat = Category.objects.get(id=cat_id)
         toa = type_of_animal.objects.get(id=cat_id)
 
-        pett = pet(id_user=user_id,title=title, slug=slug, content=content, photo=photo, category=cat , type_of_animal=toa )
+        pett = pet(id_user=user_id,title=title, slug=slug, additional_information=content, photo=photo, category=cat , type_of_animal=toa )
         pett.save()
         return redirect('home')
     else:

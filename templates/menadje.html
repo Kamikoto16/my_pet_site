@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Посты на одобрение</h1>
+  <table>
+    <thead>
+      <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>статус</th>
+      <th>кнопки</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for person in rew %}
+      <tr><td>{{person.id}}</td><td>{{person.title}}</td><td>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <input type="hidden" name="fixed_value" value="{{person.id}}">
+    
+          <select style="width: 100px;" name="toa" id="toa" required>
+            {% for category in status %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select><br><br>
+          </td><td> <input type="submit" value="установить статус">
+         <a href="/users/get_post/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></a>
+        <a href="/users/deletepost/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a>
+  </td></tr>
+  </form>    
+
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h1>Посты архивные</h1>
+  <table>
+    <thead>
+      <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>статус</th>
+      <th>кнопки</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for person in archive %}
+      <tr><td>{{person.id}}</td><td>{{person.title}}</td><td>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <input type="hidden" name="fixed_value" value="{{person.id}}">
+    
+          <select style="width: 100px;" name="toa" id="toa" required>
+            {% for category in status %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select><br><br>
+          </td><td> <input type="submit" value="установить статус">
+         <a href="/users/get_post/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></a>
+        <a href="/users/deletepost/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a>
+  </td></tr>
+  </form>    
+
+    {% endfor %}
+    </tbody>
+  </table>
+
+    <h1>Посты публичные</h1>
+  <table>
+    <thead>
+      <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>статус</th>
+      <th>кнопки</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for person in pub %}
+      <tr><td>{{person.id}}</td><td>{{person.title}}</td><td>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <input type="hidden" name="fixed_value" value="{{person.id}}">
+    
+          <select style="width: 100px;" name="toa" id="toa" required>
+            {% for category in status %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select><br><br>
+          </td><td> <input type="submit" value="установить статус">
+         <a href="/users/get_post/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Просмотр</button></a>
+        <a href="/users/deletepost/{{ person.id }}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a>
+  </td></tr>
+  </form>    
+
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+{% block name %}страница менед {% endblock %}
+
+
+

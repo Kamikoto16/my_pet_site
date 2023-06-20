@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Group , Permission
 
 
 
@@ -59,6 +60,10 @@ class posts(models.Model):
         ordering = ['id']
 
 
+
+
+
+
 class comments(models.Model):
     id_user = models.IntegerField()
     id_pet = models.IntegerField()
@@ -72,3 +77,31 @@ class comments(models.Model):
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
+
+
+class role(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name="вид")    
+    def __str__(self):
+        return self.name
+    def __int__(self):
+        return self.id
+    class Meta:
+        verbose_name = 'role'
+        verbose_name_plural = 'role'
+        ordering = ['id']
+
+
+class list_role(models.Model):
+    role = models.ForeignKey('role', on_delete=models.CASCADE, related_name='roles')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='list_roles')
+    
+    def str(self):
+        return self.role.name
+    
+    def int(self):
+        return self.id
+    
+    class Meta:
+        verbose_name = 'list role'
+        verbose_name_plural = 'list roles'
+        ordering = ['id']

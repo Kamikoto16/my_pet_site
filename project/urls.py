@@ -5,6 +5,9 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from project import settings
 from users.views import home 
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),

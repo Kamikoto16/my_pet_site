@@ -53,6 +53,9 @@
                             <div class="d-flex flex-row align-items-center">
                                 <p class="small text-muted mb-0">{{ c.time_create }}</p>
                                 <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+        {% if request.session.role == "менеджер" %}
+             <a href="/users/delete_cooment/{{ c.id }}"><button type="button" class="btn me-2" style="color:red">удалить</button></a> 
+        {% endif %}
                                 <p class="small text-muted mb-0">от {{ c.user.username }}</p>
                             </div>
                         </div>

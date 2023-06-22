@@ -254,3 +254,18 @@ def help_view(request):
         return redirect('help')  # Перенаправление на страницу помощи
 
     return render(request, 'help.html')
+
+def delete_cooment(request, id):
+	# Получаем URL страницы, с которой пришел запрос
+	previous_page = request.META.get('HTTP_REFERER')
+
+	try:
+		u = comments.objects.get(id=id)
+		u.delete()
+		if previous_page:
+			return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
+	except e:
+		pass
+	
+	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
+	return redirect('/')

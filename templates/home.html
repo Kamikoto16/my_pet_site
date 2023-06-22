@@ -11,8 +11,8 @@
 <html class="cursor-paw">
 <body style="background-color: rgba(255, 255, 255, 0.5);">
 
-<div class="p-5 mb-4   text-center bg-overlay">
-  <div class="container py-5">
+<div class="p-1 mb-3   text-center bg-overlay">
+  <div class="container py-1">
     <h1 id="bobik" class="display-3 fw-bold" style="font-size: 5rem;">BobikFinder</h1>
     <p id="my-text" class="fs-3">Сайт по поиску пропавших животных</p>
   </div>
@@ -20,19 +20,7 @@
 
 <script>
   const bobikElement = document.getElementById('bobik');
-  bobikElement.addEventListener('mouseenter', function() {
-    bobikElement.style.fontSize = '5.1rem';
-    bobikElement.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
-  });
-
-  bobikElement.addEventListener('mouseleave', function() {
-    bobikElement.style.fontSize = '5rem';
-    bobikElement.style.textShadow = 'none';
-  });
-
-  bobikElement.addEventListener('click', function() {
-    alert('Нашли питомца? Создайте объявление! Потеряли? Поищите его в списке объявлений!');
-  });
+  bobikElement.style.cssText = 'text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);';
 </script>
 
 <div class="row align-items-md-stretch">
@@ -41,7 +29,7 @@
       <h2>Список объявлений</h2>
       <p>Если вы беспокоитесь о судьбе своего питомца, то стоит начать свои поиски в ранее опубликованных постах.</p>
       <a href="/users/posts">
-        <button class="btn btn-outline-light" type="button">Смотреть объявления</button>
+        <button class="btn btn-outline-light btn-lg" type="button">Смотреть объявления</button>
       </a>
     </div>
   </div>
@@ -50,7 +38,7 @@
       <h2>Создать объявление</h2>
       <p>Что ж, если не нашли своего дружка, то давайте создадим для него объявление.</p>
       <a href="/users/add_pet">
-        <button class="btn btn-outline-secondary" type="button">Создать объявление</button>
+        <button class="btn btn-outline-secondary btn-lg" type="button">Создать объявление</button>
       </a>
     </div>
   </div>
@@ -58,7 +46,7 @@
 
 
 
-    <h1 style="background-color:#212529;border-radius: 5px; margin-top:20px ;color :#fff;padding: 20; width: auto;" >Последние объявления</h1>
+    <h1 style="background-color:#212529;border-radius: 5px; margin-top:20px ;color :#fff;padding: 15px; width:100% ;" >Последние объявления</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
     
     {% for person in persons %}

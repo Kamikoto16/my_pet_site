@@ -181,3 +181,7 @@ def menadje(request):
 	statuss = status.objects.all()
 	context = {'rew':rew ,'status':statuss ,'archive':archive,'pub':pub}
 	return render(request, 'menadje.html', context)
+
+def archive(request):
+	pets = pet.objects.filter(status__name='архив').order_by('-id')
+	return render(request, 'posts.html', {'persons': pets})

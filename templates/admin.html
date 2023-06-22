@@ -39,7 +39,11 @@
           {% endfor %}
         </select><br><br>
       </td>
-      <td><input type="submit" value="установить статус" data-user-id="{{ user_id }}"></td>
+        <td>
+          <input type="submit" value="установить статус" data-user-id="{{ user_id }}">
+          <a href="/users/delete_user/{{ user_id }}"><button type="button" class="btn btn-sm btn-outline-secondary">удалить пользователя</button></a>
+
+        </td>
     </form>
   </tr>
 {% endfor %}

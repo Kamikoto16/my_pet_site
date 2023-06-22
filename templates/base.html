@@ -43,7 +43,9 @@
         {% if request.session.role == "менеджер" %}
              <a href="/users/menadje"><button type="button" class="btn btn-outline-light me-2">менеджмент</button></a> 
         {% endif %}
-
+        {% if request.session.role == "админ" %}
+             <a href="/users/admin"><button type="button" class="btn btn-outline-light me-2">админка</button></a> 
+        {% endif %}
 
           <a href="/users/profile/"><button type="button" class="btn btn-outline-light me-2">Мой профиль</button></a>
     <a href="#" id="logoutButton" class="btn btn-outline-light me-2">{{user.username}} | Выйти</a>

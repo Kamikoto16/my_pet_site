@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import pet_list ,RegisterUser ,logout_user ,add_pet ,archive,\
-profile,delete_post,get_post,search ,menadje
+profile,delete_post,get_post,search ,menadje ,admin
 
 
 
@@ -21,7 +21,7 @@ urlpatterns = [
     path('get_post/<int:id>/', get_post, name='get_post'),
 
 
-
+    path('admin', admin, name='admin'),
     path('menadje', menadje, name='menadje'),
     
 ]

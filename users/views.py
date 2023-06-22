@@ -13,10 +13,10 @@ from .models import *
 from .utils import *
 from time import gmtime, strftime
 from .models import Category ,comments ,type_of_animal ,status ,role ,list_role
-from .models import posts as pet
-import hashlib
-
-
+from .models import role as roler 
+from .models import posts as pet 
+from collections import defaultdict
+from django.contrib.auth.models import User
 def get_post(request, id):
 	if request.method == 'POST':
 		try:
@@ -185,3 +185,38 @@ def menadje(request):
 def archive(request):
 	pets = pet.objects.filter(status__name='архив').order_by('-id')
 	return render(request, 'posts.html', {'persons': pets})
+
+
+def admin(request):
+	if request.method == 'POST':
+
+
+		user = User.objects.get(id=request.POST.get('fixed_value'))
+		role_set = request.POST.get('toa')
+
+		try:
+			obj = list_role.objects.get(user_id=user)
+			obj.role_id = roler.objects.get(id=role_set)
+			obj.save()
+		except Exception as e:
+			print(e)
+			rr = roler.objects.get(id=role_set)
+			obj = list_role(user=user,role=rr)
+			obj.save()
+		# obj.status = status.objects.get(id=request.POST.get('toa'))
+		# obj.save()
+
+	
+	user_roles_dict = {}
+	for user in User.objects.all():
+		roles = user.list_roles.all()
+		if roles.exists():
+			user_roles_dict[user.id] = {"username": user.username, "email": user.email, "role": ""}
+			for role in roles:
+				user_roles_dict[user.id]["role"] += role.role.name + " "
+		else:
+			user_roles_dict[user.id] = {"username": user.username, "email": user.email, "role": "пользователь"}
+	
+	roles = roler.objects.all()
+	context = {'user_roles_dict': user_roles_dict,'roles':roles}
+	return render(request, 'admin.html', context)   

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+<body style="background-color: rgba(255, 255, 255, 0.5);">
+
+    <div class="p-5 mb-4  rounded-3 bg-overlay">
+        <div class="container-fluid py-5" style="opacity: 1;">
+  <h1>Все пользователи</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ник</th>
+        <th>Роль</th>
+        <th>Почта</th>
+        <th>новая роль</th>
+        <th>кнопки</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for user_id, user_data in user_roles_dict.items %}
+        {% csrf_token %}
+        <tr>
+          <td>{{ user_id }}</td>
+         
+          <td>{{ user_data.username }}</td>
+          <td>{{ user_data.role }}</td>
+          <td>{{  user_data.email }}</td>
+          <td>
+            <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                
+                <input type="hidden" name="fixed_value" value="{{ user_id }}">
+        
+              <select style="width: 100px;" name="toa" id="toa" required>
+                {% for category in roles %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+              </select><br><br>
+          </td>
+        <td> <input type="submit" value="установить статус"></td>
+        </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+ 
+{% endblock %}
+{% block name %}страница администратора {% endblock %}
+
+
+

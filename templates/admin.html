@@ -21,29 +21,28 @@
       </tr>
     </thead>
     <tbody>
-      {% for user_id, user_data in user_roles_dict.items %}
-        {% csrf_token %}
-        <tr>
-          <td>{{ user_id }}</td>
-         
-          <td>{{ user_data.username }}</td>
-          <td>{{ user_data.role }}</td>
-          <td>{{  user_data.email }}</td>
-          <td>
-            <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-                
-                <input type="hidden" name="fixed_value" value="{{ user_id }}">
+{% for user_id, user_data in user_roles_dict.items %}
         
-              <select style="width: 100px;" name="toa" id="toa" required>
-                {% for category in roles %}
-                  <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-              </select><br><br>
-          </td>
-        <td> <input type="submit" value="установить статус"></td>
-        </tr>
 
-      {% endfor %}
+  <tr id="user_{{ user_id }}">
+    <td>{{ user_id }}</td>
+    <td>{{ user_data.username }}</td>
+    <td>{{ user_data.role }}</td>
+    <td>{{ user_data.email }}</td>
+    <td>
+      <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">{% csrf_token %}
+
+        <input type="hidden" name="fixed_value" value="{{ user_id }}">
+        <select style="width: 100px;" name="toa" id="toa" required>
+          {% for category in roles %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        </select><br><br>
+      </td>
+      <td><input type="submit" value="установить статус" data-user-id="{{ user_id }}"></td>
+    </form>
+  </tr>
+{% endfor %}
     </tbody>
   </table>
 

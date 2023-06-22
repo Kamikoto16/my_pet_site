@@ -29,17 +29,18 @@
     <div class="card shadow-0 border" style="background-color: #f0f2f5;">
       <div class="card-body p-4">
         <div class="form-outline mb-4">
+           
+            {% if a == 0 %}
              <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
 				<h1>Комментарии: </h1>
                 <label for="content">Оставьте Ваш комментарий, если есть какая-либо информация по питомцу!</label>
                 <input type="text" name="content" id="content" required><br><br>
-                
-
-
                 <input type="submit" value="добавить коммент">
               </form>
-         
+
+
+            {% endif %}
         </div>
             {% for c in comments_list %}
                 <div class="card mb-4">

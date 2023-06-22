@@ -37,8 +37,16 @@ def get_post(request, id):
 			return redirect('login')
 
 	petp = pet.objects.get(id=id)
+	
+
 	comments_list = comments.objects.filter(id_pet=id).select_related('user')
-	return render(request, 'post.html', {'pets': petp, 'comments_list': comments_list})
+	
+	if str(petp.status) == 'архив':
+		print(22)
+		a =1
+	else:
+		a =0
+	return render(request, 'post.html', {'pets': petp, 'comments_list': comments_list ,'a':a})
 @login_required(login_url='/users/login')
 def delete_post(request, id):
 	# Получаем URL страницы, с которой пришел запрос

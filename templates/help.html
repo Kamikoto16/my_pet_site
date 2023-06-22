@@ -1,0 +1,20 @@
+<form method="post" action="{% url 'help' %}">
+    {% csrf_token %}
+    <label for="problem_text">Проблема:</label>
+    <textarea name="problem_text" id="problem_text" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required><br><br>
+
+    <!-- Код для простой капчи -->
+
+    <input type="submit" value="Отправить">
+</form>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}

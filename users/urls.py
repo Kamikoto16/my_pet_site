@@ -2,7 +2,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import pet_list ,RegisterUser ,logout_user ,add_pet ,archive,\
-profile,delete_post,get_post,search ,menadje ,admin,delete_user
+profile,delete_post,get_post,search ,menadje ,admin,delete_user, help_view
+
 
 
 
@@ -25,5 +26,7 @@ urlpatterns = [
 
     path('admin', admin, name='admin'),
     path('menadje', menadje, name='menadje'),
+    
+    path('help', help_view, name='help'),
     
 ]

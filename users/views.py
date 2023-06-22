@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from .utils import *
@@ -17,6 +16,10 @@ from .models import role as roler
 from .models import posts as pet 
 from collections import defaultdict
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+import smtplib
+from django.contrib import messages
 def get_post(request, id):
 	if request.method == 'POST':
 		try:
@@ -234,3 +237,20 @@ def delete_user(request, id):
 	
 	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
 	return redirect('/users/admin')
+
+def help_view(request):
+    if request.method == 'POST':
+        problem_text = request.POST.get('problem_text')
+        email = request.POST.get('email')
+
+        # Отправка письма на почту администратора
+        subject = 'Новое сообщение о проблеме'
+        message = f'Проблема: {problem_text}\nEmail: {email}'
+        from_email = settings.EMAIL_HOST_USER
+        to_email = ['gusymba14@gmail.com']  # Замените на вашу почту администратора
+        send_mail(subject, message, from_email, to_email)
+
+        messages.success(request, 'Сообщение отправлено администратору')
+        return redirect('help')  # Перенаправление на страницу помощи
+
+    return render(request, 'help.html')

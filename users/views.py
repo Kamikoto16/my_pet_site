@@ -47,17 +47,37 @@ def get_post(request, id):
 	else:
 		a =0
 	return render(request, 'post.html', {'pets': petp, 'comments_list': comments_list ,'a':a})
+
+
+from django.utils import timezone
+
+
+
+def check_post_status():
+    postss = posts.objects.filter(status='публично')
+    print(len(postss))
+    for post in postss:
+        created_on = post.time_create
+        if timezone.now() - created_on <= timezone.timedelta(days=7):
+            post.status_id = 3 # 1 - новый статус
+            post.save()
+        else:
+            post.status_id = 3 # 2 - статус архивного поста
+            post.save()
 @login_required(login_url='/users/login')
 def delete_post(request, id):
 	# Получаем URL страницы, с которой пришел запрос
 	previous_page = request.META.get('HTTP_REFERER')
 
 	try:
-		petp = pet.objects.get(id=id, id_user=request.user.id)
+	
+		petp = pet.objects.get(id=id)
 		petp.delete()
 		if previous_page:
 			return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
-	except pet.DoesNotExist:
+	except Exception as e:
+
+		print(e)
 		pass
 	
 	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
@@ -99,6 +119,7 @@ def add_pet(request):
 		context = {'categories': categories , 'type_of_animals':type_of_animals}
 		return render(request, 'add_pet.html', context)
 def pet_list(request):
+	check_post_status()
 	pets = pet.objects.filter(status__name='публично').order_by('-id')
 	return render(request, 'posts.html', {'persons': pets})
 class RegisterUser(DataMixin,  CreateView):
@@ -240,7 +261,8 @@ def delete_user(request, id):
 		u.delete()
 		if previous_page:
 			return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
-	except e:
+	except Exception as e:
+
 		pass
 	
 	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
@@ -272,7 +294,8 @@ def delete_cooment(request, id):
 		u.delete()
 		if previous_page:
 			return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
-	except e:
+	except Exception as e:
+
 		pass
 	
 	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля

@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% block name %}форма помощи{% endblock %}
+{% block content %}
+{% load static %}
 <form method="post" action="{% url 'help' %}">
     {% csrf_token %}
     <label for="problem_text">Проблема:</label>
@@ -18,3 +22,4 @@
     {% endfor %}
 </div>
 {% endif %}
+{% endblock %}

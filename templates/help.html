@@ -11,8 +11,10 @@
     <input type="email" name="email" id="email" required><br><br>
 
     <!-- Код для простой капчи -->
-	<input name="captcha_value" value="{{ captcha_value }}">
-    <p>Введите значение капчи: {{ captcha_value }} </p>
+	<input name="captcha_value_new" value="">
+    
+    <p>Введите значение капчи:  </p>
+    <input type="text" name="captcha_value" value="{{ captcha_value }}" readonly>
 
     <input type="submit" value="Отправить">
 </form>

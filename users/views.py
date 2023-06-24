@@ -30,10 +30,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-
+import random
 
 from datetime import datetime, timedelta
 from django.utils import timezone
+
+
+
+
+
 def archive_old_posts():
 	print('sss')
 	# Вычисляем время месяц назад от текущего времени
@@ -284,21 +289,29 @@ def delete_user(request, id):
 	return redirect('/users/admin')
 
 def help_view(request):
+	captcha_value = random.randint(0,99999999)
 	if request.method == 'POST':
-		problem_text = request.POST.get('problem_text')
-		email = request.POST.get('email')
 
-		# Отправка письма на почту администратора
-		subject = 'Новое сообщение о проблеме'
-		message = f'Проблема: {problem_text}\nEmail: {email}'
-		from_email = settings.EMAIL_HOST_USER
-		to_email = ['gusymba14@gmail.com']  # Замените на вашу почту администратора
-		send_mail(subject, message, from_email, to_email)
+		print(str(request.POST.get('captcha_value')),str(request.POST.get('captcha_value_new')))
+		if (str(request.POST.get('captcha_value')) == str(request.POST.get('captcha_value_new'))):
 
-		messages.success(request, 'Сообщение отправлено администратору')
-		return redirect('help')  # Перенаправление на страницу помощи
+			problem_text = request.POST.get('problem_text')
+			email = request.POST.get('email')
 
-	return render(request, 'help.html')
+			# Отправка письма на почту администратора
+			subject = 'Новое сообщение о проблеме'
+			message = f'Проблема: {problem_text}\nEmail: {email}'
+			from_email = settings.EMAIL_HOST_USER
+			to_email = ['gusymba14@gmail.com']  # Замените на вашу почту администратора
+			send_mail(subject, message, from_email, to_email)
+
+			messages.success(request, 'Сообщение отправлено администратору')
+			return redirect('help')  # Перенаправление на страницу помощи
+		else:
+			messages.success(request, 'капча не пройдена')
+			return redirect('help')  # Перенаправление на страницу помощи			
+	context = {'captcha_value' :captcha_value}
+	return render(request, 'help.html' , context)
 
 def delete_cooment(request, id):
 	# Получаем URL страницы, с которой пришел запрос

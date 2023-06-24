@@ -29,9 +29,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-
 import random
-
 from datetime import datetime, timedelta
 from django.utils import timezone
 

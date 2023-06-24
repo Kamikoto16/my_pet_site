@@ -6,14 +6,12 @@
 
 </head>
 <body class="container">
-
 <header class="p-3 text-bg-dark">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none ">
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
-
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" <button type="button" class="btn btn-outline-light me-2">Главная страница</a></li>
           <li><a href="/users/search" <button type="button" class="btn btn-outline-light me-2">Поиск по критериям</a></li>
@@ -21,10 +19,6 @@
           <li><a href="/about" <button type="button" class="btn btn-outline-light me-2">О нас</a></li>
           <li><a href="/contact" <button type="button" class="btn btn-outline-light me-2">Контакты и адреса</a></li>
           <li><a href="/users/archive" <button type="button" class="btn btn-outline-light me-2">Архив</a></li>
-
-
-
-
           {% block reg_stat_bt %}{% endblock %}
         </ul>
 
@@ -35,8 +29,6 @@
     background-position: center;
 	background-attachment: fixed;
 	}
-
-
 </style>
    <!-- кнопка помощь -->     
 <style>
@@ -73,27 +65,24 @@
 }
     </style>
 		
-        <div class="text-end">
-
-          {% if request.user.is_authenticated %}
-
+  <div class="text-end">
+        {% if request.user.is_authenticated %}
         {% if request.session.role == "менеджер" %}
              <a href="/users/menadje"><button type="button" class="btn btn-outline-light me-2">Менеджмент</button></a> 
         {% endif %}
         {% if request.session.role == "админ" %}
              <a href="/users/admin"><button type="button" class="btn btn-outline-light me-2">Меню Админа</button></a> 
         {% endif %}
-
           <a href="/users/profile/"><button type="button" class="btn btn-outline-light me-2">Мой профиль</button></a>
     <a href="#" id="logoutButton" class="btn btn-outline-light me-2">{{user.username}} | Выйти</a>
           {% else %}
-          <a href="/users/login/"><button type="button" class="btn btn-outline-light me-2">Войти в существующий аккаунт</button></a>
-           <a href="/users/register/"><button type="button" class="btn btn-outline-light me-2">Зарегистрироваться</button></a>
+    <a href="/users/login/"><button type="button" class="btn btn-outline-light me-2">Войти в существующий аккаунт</button></a>
+    <a href="/users/register/"><button type="button" class="btn btn-outline-light me-2">Зарегистрироваться</button></a>
           {% endif %}
-        </div>
-      </div>
-    </div>
-  </header>
+  </div>
+ </div>
+</div>
+</header>
 
 
 {% block content %}{% endblock %}

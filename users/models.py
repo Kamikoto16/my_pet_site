@@ -59,11 +59,6 @@ class posts(models.Model):
         verbose_name_plural = 'pet'
         ordering = ['id']
 
-
-
-
-
-
 class comments(models.Model):
     id_user = models.IntegerField()
     id_pet = models.IntegerField()

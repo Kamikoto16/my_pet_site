@@ -4,13 +4,15 @@
 {% load static %}
 <form method="post" action="{% url 'help' %}">
     {% csrf_token %}
-    <label for="problem_text">Проблема:</label>
+    <label for="problem_text">Опишите вашу проблему:</label>
     <textarea name="problem_text" id="problem_text" rows="4" cols="50" required></textarea><br><br>
 
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" required><br><br>
 
     <!-- Код для простой капчи -->
+	<input name="captcha_value" value="{{ captcha_value }}">
+    <p>Введите значение капчи: {{ captcha_value }} </p>
 
     <input type="submit" value="Отправить">
 </form>

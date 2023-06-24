@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from users.views import pet_list ,RegisterUser ,logout_user ,add_pet ,archive,\
 profile,delete_post,get_post,search ,menadje ,admin,delete_user, \
 help_view,delete_cooment,change_password,admin_change_password
-
+from . import views
 
 
 
@@ -34,5 +34,6 @@ urlpatterns = [
 
     
     path('help', help_view, name='help'),
+    path('your-view', views.your_view, name='your-view'),
     
 ]

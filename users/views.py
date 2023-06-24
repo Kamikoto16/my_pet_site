@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+import random
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,7 +25,6 @@ from django.contrib import messages
 from .forms import ChangePasswordForm
 import smtplib
 from django.contrib import messages
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
@@ -337,4 +337,8 @@ def admin_change_password(request, user_id):
         return redirect('/users/admin')
 
 
-    return render(request, 'admin_change_password.html', {'form': form ,'a':user}) 
+    return render(request, 'admin_change_password.html', {'form': form ,'a':user})
+    
+def your_view(request):
+    captcha_value = random.randint(1000, 9999)
+    return render(request, 'help.html', {'captcha_value': captcha_value})

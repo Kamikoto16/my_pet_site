@@ -292,7 +292,7 @@ def help_view(request):
 	captcha_value = random.randint(0,99999999)
 	if request.method == 'POST':
 
-		print(str(request.POST.get('captcha_value')),str(request.POST.get('captcha_value_new')))
+
 		if (str(request.POST.get('captcha_value')) == str(request.POST.get('captcha_value_new'))):
 
 			problem_text = request.POST.get('problem_text')

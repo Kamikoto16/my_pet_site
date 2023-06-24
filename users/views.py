@@ -24,6 +24,13 @@ from django.contrib import messages
 from .forms import ChangePasswordForm
 import smtplib
 from django.contrib import messages
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+
 def get_post(request, id):
 	if request.method == 'POST':
 		try:
@@ -317,3 +324,17 @@ def change_password(request):
     else:
         form = ChangePasswordForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+
+
+def admin_change_password(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    form = AdminPasswordChangeForm(user=user, data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Пароль был успешно изменен')
+        return redirect('/users/admin')
+
+
+    return render(request, 'admin_change_password.html', {'form': form ,'a':user}) 

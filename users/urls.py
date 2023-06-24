@@ -2,7 +2,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import pet_list ,RegisterUser ,logout_user ,add_pet ,archive,\
-profile,delete_post,get_post,search ,menadje ,admin,delete_user, help_view,delete_cooment,change_password
+profile,delete_post,get_post,search ,menadje ,admin,delete_user, \
+help_view,delete_cooment,change_password,admin_change_password
 
 
 
@@ -21,6 +22,8 @@ urlpatterns = [
     path('deletepost/<int:id>/', delete_post, name='delete_post'),
     path('get_post/<int:id>/', get_post, name='get_post'),
     path('delete_user/<int:id>/', delete_user, name='delete_user'),
+    path('admin_change_password/<int:user_id>/', admin_change_password, name='admin_change_password'),
+
 
     path('change_password', change_password, name='change_password'),
 

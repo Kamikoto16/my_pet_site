@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.forms import PasswordChangeForm
 User = get_user_model()
 
 
@@ -47,3 +47,9 @@ class ChangePasswordForm(forms.Form):
         if new_password1 and new_password2 and new_password1 != new_password2:
             raise forms.ValidationError("Пароли не совпадают!")
         return new_password2
+class AdminPasswordChangeForm(PasswordChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('old_password')
+        self.fields.pop('new_password2')

@@ -18,6 +18,10 @@ from collections import defaultdict
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import ChangePasswordForm
 import smtplib
 from django.contrib import messages
 def get_post(request, id):
@@ -300,3 +304,16 @@ def delete_cooment(request, id):
 	
 	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
 	return redirect('/')
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data.get('new_password1')
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.success(request, 'Пароль успешно изменён!')
+            return redirect('home')
+    else:
+        form = ChangePasswordForm(request.user)
+    return render(request, 'change_password.html', {'form': form})

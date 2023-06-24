@@ -123,7 +123,7 @@ def add_pet(request):
 		context = {'categories': categories , 'type_of_animals':type_of_animals}
 		return render(request, 'add_pet.html', context)
 def pet_list(request):
-	check_post_status()
+	# check_post_status()
 	pets = pet.objects.filter(status__name='публично').order_by('-id')
 	return render(request, 'posts.html', {'persons': pets})
 class RegisterUser(DataMixin,  CreateView):

@@ -114,9 +114,11 @@ def add_pet(request):
 		photo = request.FILES['photo']
 		cat_id = request.POST.get('cat')
 
+	
+
 		toa_id = request.POST.get('toa')
 		cat = Category.objects.get(id=cat_id)
-		toa = type_of_animal.objects.get(id=cat_id)
+		toa = type_of_animal.objects.get(id=toa_id)
 
 		start_staus = status.objects.get(name="проверка")
 	

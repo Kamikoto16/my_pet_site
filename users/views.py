@@ -38,7 +38,6 @@ from django.utils import timezone
 
 
 def archive_old_posts():
-	print('sss')
 	# Вычисляем время месяц назад от текущего времени
 	month_ago = timezone.now() - timedelta(days=30)
 	# Получаем все записи, у которых время обновления больше месяца назад
@@ -68,7 +67,6 @@ def get_post(request, id):
 	comments_list = comments.objects.filter(id_pet=id).select_related('user')
 	
 	if str(petp.status) == 'архив':
-		print(22)
 		a =1
 	else:
 		a =0

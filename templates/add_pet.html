@@ -36,8 +36,9 @@
             <option value="{{ category.id }}">{{ category.name }}</option>
             {% endfor %}
           </select><br><br>
+		  <p>Объявление будет доступно 30 дней, после чего оно будет перемещено в архив. Для восстановления своего объявления напишите администратору сайта, нажав на кнопку "Помощь" и указав вашу почту, привязанную на сайте.</p>
 
-          <button type="button" class="btn btn-dark" onclick="checkFileFormat()">Добавить фотографию</button>
+          <button type="button" class="btn btn-dark" onclick="checkFileFormat()">Разместить объявление</button>
         </form>
       </div>
     </div>
@@ -91,11 +92,7 @@
         var form = document.getElementById('advertisementForm');
         form.submit();
       }
-
-      $('#confirmationModal').on('hidden.bs.modal', function (e) {
-        $('#confirmationModal').modal('hide');
-      });
     </script>
 
   </body>
-{% endblock %}
+  {% endblock %}

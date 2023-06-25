@@ -103,11 +103,11 @@
 </footer>
 
 <!-- Модальное окно для подтверждения выхода -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutConfirmationModal" tabindex="-1" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirmationModalLabel">Уже нашли или помогли пристроить потеряшку и готовы на этом остановиться?</h5>
+        <h5 class="modal-title" id="logoutConfirmationModalLabel">Уже нашли или помогли пристроить потеряшку и готовы на этом остановиться?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-footer">
@@ -122,8 +122,8 @@
 <script>
   document.getElementById('logoutButton').addEventListener('click',
   function() {
-    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    confirmationModal.show();
+    var logoutConfirmationModal = new bootstrap.Modal(document.getElementById('logoutConfirmationModal'));
+    logoutConfirmationModal.show();
   });
 </script>
 

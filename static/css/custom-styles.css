@@ -3,19 +3,6 @@ h1.display-5 {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Графический эффект при наведении курсора */
-h1.display-5:hover {
-  transform: scale(1.02);
-}
-/* Графический эффект для текста при наведении */
-#expanding-text {
-  line-height: 1;
-  transition: line-height 0.3s ease;
-}
-
-#expanding-text:hover {
-  line-height: 1.2;
-}
 /* Графический эффект для текста при наведении на блоки списка объявлений и создать объявление */
 .block1 {
   transition: transform 0.3s ease;

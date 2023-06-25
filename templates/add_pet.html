@@ -3,98 +3,99 @@
 {% block content %}
 
   {% load static %}
-    <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
-<body style="background-color: rgba(255, 255, 255, 0.5);">
+  <link rel="stylesheet" href="{% static 'css/custom-styles.css' %}">
+  <body style="background-color: rgba(255, 255, 255, 0.5);">
 
     <div class="p-5 mb-4 rounded-3 bg-overlay">
-        <div class="container-fluid py-5" style="opacity: 1;">
-		  <h2>Новое объявление</h2>
-		  <!-- Добавил вызов функции ошибки onsubmit="return validateForm() -->
-   <form id="advertisementForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-    {% csrf_token %}
-    <label for="title">Кличка:</label>
-    <input type="text" name="title" id="title" required><br><br>
-    
-    <label for="content">Дополнительная информация о питомце:</label>
-    <textarea name="content" id="content"></textarea><br><br>
+      <div class="container-fluid py-5" style="opacity: 1;">
+        <h2>Новое объявление</h2>
+        <!-- Добавил вызов функции ошибки onsubmit="return validateForm() -->
+        <form id="advertisementForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <label for="title">Кличка:</label>
+          <input type="text" name="title" id="title" required><br><br>
 
-    <label for="photo">Добавить фотографию:</label>
-    <input type="file" name="photo" id="photo" required><br><br>
-	<!-- ошибка с типом файла-->
-	<small id="fileFormatError" style="color: red; display: none;">Доступны только форматы изображений.</small><br><br>
-	<!-- ошибка с типом файла-->
-    <label for="cat">Категория:</label>
-    <select style="width: 100px;" name="cat" id="cat" required>
-      {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
-      {% endfor %}
-    </select><br><br>
+          <label for="content">Дополнительная информация о питомце:</label>
+          <textarea name="content" id="content"></textarea><br><br>
 
-    <label for="toa">Вид животного:</label>
-    <select style="width: 100px;" name="toa" id="toa" required>
-      {% for category in type_of_animals %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
-      {% endfor %}
-    </select><br><br>
+          <label for="photo">Добавить фотографию:</label>
+          <input type="file" name="photo" id="photo" required><br><br>
+          <!-- ошибка с типом файла-->
+          <small id="fileFormatError" style="color: red; display: none;">Доступны только форматы изображений.</small><br><br>
+          <!-- ошибка с типом файла-->
+          <label for="cat">Категория:</label>
+          <select style="width: 100px;" name="cat" id="cat" required>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select><br><br>
 
-    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#confirmationModal">Разместить</button>
-  </form>
-          </div>
+          <label for="toa">Вид животного:</label>
+          <select style="width: 100px;" name="toa" id="toa" required>
+            {% for category in type_of_animals %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select><br><br>
+
+          <button type="button" class="btn btn-dark" onclick="checkFileFormat()">Добавить фотографию</button>
+        </form>
+      </div>
     </div>
-		<!-- скрипт на формат фотографии-->
-	<script>
-    function validateForm() {
-      var fileInput = document.getElementById('photo');
-      var file = fileInput.files[0];
-      var fileFormatError = document.getElementById('fileFormatError');
 
-      if (file) {
-        var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp', 'tiff'];
-
-        var fileName = file.name;
-        var fileExtension = fileName.split('.').pop().toLowerCase();
-
-        if (!allowedExtensions.includes(fileExtension)) {
-          fileFormatError.style.display = 'block';
-          return false;
-        }
-      }
-
-      return true;
-    }
-	</script>
-  
-  <!-- Модальное окно подтверждения -->
-  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmationModalLabel">Подтверждение размещения объявления</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Спустя несколько минут Ваше объявление можно будет увидеть во вкладке "Список объявлений". При возникновении ошибок, просьба прислать описание вашей проблемы, нажав на круглую кнопку "Помощь", находящуюся в правом нижнем углу сайта.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-          <button type="submit" class="btn btn-dark" onclick="submitForm()">Подтвердить</button>
+    <!-- Модальное окно подтверждения -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">Подтверждение размещения объявления</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Спустя несколько минут Ваше объявление можно будет увидеть во вкладке "Список объявлений". При возникновении ошибок, просьба прислать описание вашей проблемы, нажав на круглую кнопку "Помощь", находящуюся в правом нижнем углу сайта.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-dark" onclick="submitForm()">Подтвердить</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-  <script>
-    function submitForm() {
-      var form = document.getElementById('advertisementForm');
-      form.submit();
-    }
-  </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-</body>
+    <script>
+      function checkFileFormat() {
+        var fileInput = document.getElementById('photo');
+        var file = fileInput.files[0];
+        var fileFormatError = document.getElementById('fileFormatError');
+
+        if (file) {
+          var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp', 'tiff'];
+
+          var fileName = file.name;
+          var fileExtension = fileName.split('.').pop().toLowerCase();
+
+          if (!allowedExtensions.includes(fileExtension)) {
+            fileFormatError.style.display = 'block';
+          } else {
+            $('#confirmationModal').modal('show');
+          }
+        }
+      }
+
+      function submitForm() {
+        var form = document.getElementById('advertisementForm');
+        form.submit();
+      }
+
+      $('#confirmationModal').on('hidden.bs.modal', function (e) {
+        $('#confirmationModal').modal('hide');
+      });
+    </script>
+
+  </body>
 {% endblock %}

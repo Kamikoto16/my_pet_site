@@ -357,3 +357,4 @@ def admin_change_password(request, user_id):
 def your_view(request):
 	captcha_value = random.randint(1000, 9999)
 	return render(request, 'help.html', {'captcha_value': captcha_value})
+    

@@ -77,26 +77,29 @@ def get_post(request, id):
 
 from django.utils import timezone
 
-
+import os
+from django.conf import settings
 
 @login_required(login_url='/users/login')
 def delete_post(request, id):
-	# Получаем URL страницы, с которой пришел запрос
-	previous_page = request.META.get('HTTP_REFERER')
+    # Получаем URL страницы, с которой пришел запрос
+    previous_page = request.META.get('HTTP_REFERER')
 
-	try:
-	
-		petp = pet.objects.get(id=id)
-		petp.delete()
-		if previous_page:
-			return redirect(previous_page) # Перенаправляем пользователя на предыдущую страницу
-	except Exception as e:
-
-		print(e)
-		pass
-	
-	# Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
-	return redirect('profile')
+    try:
+        petp = posts.objects.get(id=id)
+        # Удаляем связанный файл из локальных файлов проекта
+        file_path = os.path.join(settings.MEDIA_ROOT, str(petp.photo))
+        os.remove(file_path)
+        petp.delete()
+        
+        if previous_page:
+            return redirect(previous_page)  # Перенаправляем пользователя на предыдущую страницу
+    except Exception as e:
+        print(e)
+        pass
+    
+    # Если предыдущая страница не определена, перенаправляем пользователя на страницу профиля
+    return redirect('profile')
 
 @login_required(login_url='/users/login')
 def profile(request):

@@ -31,6 +31,18 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
 
+
+from datetime import datetime, timedelta
+from django.utils import timezone
+def archive_old_posts():
+	print('sss')
+	# Вычисляем время месяц назад от текущего времени
+	month_ago = timezone.now() - timedelta(days=30)
+	# Получаем все записи, у которых время обновления больше месяца назад
+	old_posts = posts.objects.filter(time_update__lt=month_ago)
+	# Обновляем статус на 'архивный' для всех найденных записей
+	status_id = status.objects.get(name='архив').id
+	old_posts.update(status_id=status_id)
 def get_post(request, id):
 	if request.method == 'POST':
 		try:
@@ -64,17 +76,6 @@ from django.utils import timezone
 
 
 
-def check_post_status():
-    postss = posts.objects.filter(status='публично')
-    print(len(postss))
-    for post in postss:
-        created_on = post.time_create
-        if timezone.now() - created_on <= timezone.timedelta(days=7):
-            post.status_id = 3 # 1 - новый статус
-            post.save()
-        else:
-            post.status_id = 3 # 2 - статус архивного поста
-            post.save()
 @login_required(login_url='/users/login')
 def delete_post(request, id):
 	# Получаем URL страницы, с которой пришел запрос
@@ -176,9 +177,10 @@ def logout_user(request):
 	return redirect('login')
 
 def home(request):
+	archive_old_posts()
 	if request.user.id!=None:
 		r = request.user.id
-
+		
 		# pett = list_role(role_id=role.objects.get(name='пользователь'),user_id=request. )
   # Укажите имя пользователя, для которого вы хотите создать запись
 
@@ -282,21 +284,21 @@ def delete_user(request, id):
 	return redirect('/users/admin')
 
 def help_view(request):
-    if request.method == 'POST':
-        problem_text = request.POST.get('problem_text')
-        email = request.POST.get('email')
+	if request.method == 'POST':
+		problem_text = request.POST.get('problem_text')
+		email = request.POST.get('email')
 
-        # Отправка письма на почту администратора
-        subject = 'Новое сообщение о проблеме'
-        message = f'Проблема: {problem_text}\nEmail: {email}'
-        from_email = settings.EMAIL_HOST_USER
-        to_email = ['gusymba14@gmail.com']  # Замените на вашу почту администратора
-        send_mail(subject, message, from_email, to_email)
+		# Отправка письма на почту администратора
+		subject = 'Новое сообщение о проблеме'
+		message = f'Проблема: {problem_text}\nEmail: {email}'
+		from_email = settings.EMAIL_HOST_USER
+		to_email = ['gusymba14@gmail.com']  # Замените на вашу почту администратора
+		send_mail(subject, message, from_email, to_email)
 
-        messages.success(request, 'Сообщение отправлено администратору')
-        return redirect('help')  # Перенаправление на страницу помощи
+		messages.success(request, 'Сообщение отправлено администратору')
+		return redirect('help')  # Перенаправление на страницу помощи
 
-    return render(request, 'help.html')
+	return render(request, 'help.html')
 
 def delete_cooment(request, id):
 	# Получаем URL страницы, с которой пришел запрос
@@ -315,32 +317,32 @@ def delete_cooment(request, id):
 	return redirect('/')
 @login_required
 def change_password(request):
-    if request.method == 'POST':
-        form = ChangePasswordForm(request.user, request.POST)
-        if form.is_valid():
-            new_password = form.cleaned_data.get('new_password1')
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.success(request, 'Пароль успешно изменён!')
-            return redirect('home')
-    else:
-        form = ChangePasswordForm(request.user)
-    return render(request, 'change_password.html', {'form': form})
+	if request.method == 'POST':
+		form = ChangePasswordForm(request.user, request.POST)
+		if form.is_valid():
+			new_password = form.cleaned_data.get('new_password1')
+			request.user.set_password(new_password)
+			request.user.save()
+			messages.success(request, 'Пароль успешно изменён!')
+			return redirect('home')
+	else:
+		form = ChangePasswordForm(request.user)
+	return render(request, 'change_password.html', {'form': form})
 
 
 
 def admin_change_password(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    form = AdminPasswordChangeForm(user=user, data=request.POST or None)
+	user = get_object_or_404(User, pk=user_id)
+	form = AdminPasswordChangeForm(user=user, data=request.POST or None)
 
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        messages.success(request, 'Пароль был успешно изменен')
-        return redirect('/users/admin')
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		messages.success(request, 'Пароль был успешно изменен')
+		return redirect('/users/admin')
 
 
-    return render(request, 'admin_change_password.html', {'form': form ,'a':user})
-    
+	return render(request, 'admin_change_password.html', {'form': form ,'a':user})
+	
 def your_view(request):
-    captcha_value = random.randint(1000, 9999)
-    return render(request, 'help.html', {'captcha_value': captcha_value})
+	captcha_value = random.randint(1000, 9999)
+	return render(request, 'help.html', {'captcha_value': captcha_value})
